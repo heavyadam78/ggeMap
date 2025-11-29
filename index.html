@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa Sojuszu GGE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="app-container">
+      <!-- MAPA -->
+      <div id="map-viewport">
+        <canvas id="game-map"></canvas>
+      </div>
+
+      <!-- UI -->
+      <div id="ui-layer">
+        <div id="search-panel" class="ui-panel left-sidebar">
+          <!--collapsed">-->
+          <button id="toggle-search-btn">
+            <i class="fa-solid fa-bug"></i>
+          </button>
+
+          <div class="panel-header">
+            <h2>Debug</h2>
+          </div>
+
+          <div class="panel-content">
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <!-- Zaktualizowany placeholder -->
+              <input
+                type="text"
+                id="player-search"
+                placeholder="Nick, obiekt lub X:Y..."
+              />
+            </div>
+            <div class="search-hint">
+              <small>Wpisz np. <b>123:456</b> i wciśnij Enter</small>
+            </div>
+
+            <hr />
+
+            <div class="checkbox-group">
+              <label class="checkbox-container">
+                <input type="checkbox" id="filter-posts-chkbox"/>
+                <span class="checkmark"></span>
+                Posterunki
+              </label>
+
+              <label class="checkbox-container">
+                <input type="checkbox" id="filter-labs-chkbox"/>
+                <span class="checkmark"></span>
+                Laba/Montki
+              </label>
+
+              <label class="checkbox-container">
+                <input type="checkbox" id="filter-alliances" />
+                <span class="checkmark"></span>
+                Temp
+              </label>
+            </div>
+
+            <hr />
+
+            <label class="switch-wrapper">
+              <span class="label-left">Ikony</span>
+
+              <label class="switch">
+                <input type="checkbox" id="icons-images"/>
+                <span class="slider round"></span>
+              </label>
+
+              <span class="label-right">Obrazy</span>
+            </label>
+
+            <hr />
+
+            <div class="status-bar">
+              <p>Graczy w sojuszu: <strong id="player-count">0</strong></p>
+              <p>Aktualny Zoom: <strong id="zoom-level">100%</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRAWY BOCZNY: Lista Graczy (TreeView) -->
+        <div id="info-panel" class="ui-panel right-sidebar">
+          <!-- PRZYCISK TERAZ JEST BEZPOŚREDNIM DZIECKIEM PANELU -->
+          <button id="toggle-panel-btn">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <div class="panel-header">
+            <h2>Członkowie Sojuszu</h2>
+          </div>
+
+<!-- Select/Dropdown -->
+              <div class="select-group">
+                <label style="margin-left: 10px;" for="map-theme">Królestwa</label>
+                <select id="map-theme" class="custom-select">
+                  <option value="default">Wielkie Cesarstwo</option>
+                  <option value="dark">Kraina Wiecznych Lodów</option>
+                  <option value="satellite">Płonące Piaski</option>
+                  <option value="terrain">Ogniste Szczyty</option>
+                </select>
+              </div>
+
+
+
+          <div class="tree-container">
+            <ul id="alliance-tree">
+              <!-- Lista generowana przez JS -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- KONTROLERY -->
+        <div class="ui-panel bottom-right">
+          <button class="control-btn" id="zoom-in">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <button class="control-btn" id="zoom-out">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <button class="control-btn" id="reset-view">
+            <i class="fa-solid fa-compress"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OKNO ZGODY (MODAL) -->
+    <!-- Domyślnie ukryte klasą 'hidden', JS je odkryje jeśli trzeba -->
+    <div id="consent-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <i class="fa-solid fa-cookie-bite"></i> Informacja
+        </div>
+        <div class="modal-body">
+          <p>
+            Ta strona wykorzystuje
+            <strong>Pamięć Przeglądarki (LocalStorage)</strong>, aby
+            zapamiętywać Twoje ustawienia:
+          </p>
+          <ul>
+            <li>Pozycję i przybliżenie mapy</li>
+            <li>Stan paneli bocznych</li>
+          </ul>
+          <p>
+            <small
+              >Żadne dane nie są wysyłane na zewnętrzne serwery. Wszystko
+              zostaje na Twoim urządzeniu.</small
+            >
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id="accept-consent-btn" class="action-btn">
+            Rozumiem i Akceptuję
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. DANE -->
+    <script src="js/data.js"></script>
+
+    <!-- 2. KONFIGURACJA I STAN -->
+    <script src="js/config.js"></script>
+    <script src="js/state.js"></script>
+
+    <!-- 3. LOGIKA POMOCNICZA -->
+    <script src="js/utils.js"></script>
+
+    <!-- 4. RYSOWANIE -->
+    <script src="js/renderer.js"></script>
+
+    <!-- 5. INTERFEJS -->
+    <script src="js/ui.js"></script>
+
+    <!-- 6. ZDARZENIA (INPUT) -->
+    <script src="js/events.js"></script>
+
+    <!-- 7. START APLIKACJI -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
