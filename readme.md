@@ -1,112 +1,125 @@
 
 ***
 
-# 🗺️ ggeMap - Interaktywna Mapa Sojuszu
+# 🗺️ ggeMap - Interactive Alliance Map
 
-**ggeMap** to lekkie, szybkie i interaktywne narzędzie webowe do wizualizacji pozycji graczy na mapie świata gry (GGE). Projekt wykorzystuje **HTML5 Canvas** do renderowania mapy, co zapewnia wysoką wydajność nawet przy dużej liczbie obiektów.
+**ggeMap** is a lightweight, fast, and interactive web tool for visualizing player positions on the game world map (GGE). The project uses **HTML5 Canvas** for rendering, ensuring high performance even with a large number of objects.
 
-![Status projektu](https://img.shields.io/badge/Status-Aktywny-success)
-![Technologia](https://img.shields.io/badge/Tech-HTML5_Canvas-orange)
-![Licencja](https://img.shields.io/badge/Licencja-MIT-blue)
+![Project Status](https://img.shields.io/badge/Status-Active-success)
+![Technology](https://img.shields.io/badge/Tech-HTML5_Canvas-orange)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
-## ✨ Główne Funkcjonalności
+![Map Preview](img/preview.png)
 
-*   **Obsługa 4 Królestw:** Wielkie Cesarstwo, Kraina Wiecznych Lodów, Płonące Piaski, Ogniste Szczyty.
-*   **Wysoka wydajność:** Płynne przybliżanie (zoom) i przesuwanie (pan) dzięki Canvas API.
-*   **Wyszukiwarka:** Szybkie szukanie graczy po nicku, nazwie obiektu lub współrzędnych (X:Y).
-*   **Filtrowanie:** Możliwość włączania/wyłączania widoczności posterunków, laboratoriów, wiosek i monumentów.
-*   **Lista Graczy:** Boczny panel z drzewiastą strukturą sojuszu (Podział na rangi).
-*   **Tryb Ikon/Obrazów:** Przełączanie między uproszczonymi ikonami a grafikami budynków (LOD).
-*   **Responsywność:** Dostosowany interfejs (zwijane panele boczne).
-*   **Zapis ustawień:** Zapamiętywanie pozycji kamery, filtrów i wybranego królestwa (LocalStorage).
 
-## 🚀 Jak uruchomić?
+## ✨ Key Features
 
-Projekt jest stroną statyczną, nie wymaga instalacji żadnych zależności (npm/node).
+*   **4 Kingdoms Support:** Great Empire, Everwinter Glacier, Burning Sands, Fire Peaks.
+*   **High Performance:** Smooth zooming and panning thanks to the Canvas API.
+*   **Search Engine:** Quickly find players by nickname, object name, or coordinates (X:Y).
+*   **Advanced Filtering:** Toggle visibility of outposts, laboratories, resource villages, and monuments.
+*   **Player List:** Sidebar with a tree structure of the alliance (Grouped by rank).
+*   **Icon/Image Mode:** Switch between simplified icons and building graphics (LOD).
+*   **Responsive UI:** Collapsible sidebars.
+*   **Settings Persistence:** Remembers camera position, filters, and selected kingdom (LocalStorage).
 
-1.  Sklonuj repozytorium:
+
+## 🚀 How to Run?
+
+The project is a static site; it requires no server installation or Node.js. You can run it in two ways:
+
+### Option 1: Download ZIP (Easiest)
+If you don't use Git, you can simply download the files:
+1.  Scroll to the top of this GitHub page.
+2.  Click the green **<> Code** button.
+3.  Select **Download ZIP**.
+4.  Extract the downloaded folder on your computer.
+5.  Double-click `index.html` to open the map in your browser.
+
+### Option 2: Git (For advanced users)
+1.  Clone the repository:
     ```bash
     git clone https://github.com/heavyadam78/ggeMap.git
     ```
-2.  Otwórz plik `index.html` w dowolnej nowoczesnej przeglądarce (Chrome, Edge, Firefox).
+2.  Open `index.html`.
 
-> **Wskazówka:** Aby udostępnić mapę sojuszowi, najlepiej włączyć **GitHub Pages** w ustawieniach repozytorium.
 
-## ⚙️ Konfiguracja Danych
+## ⚙️ Data Configuration
 
-Wszystkie dane graczy znajdują się w pliku `js/data.js`. Dane są podzielone na królestwa.
+All player data is located in `js/data.js`. Data is organized by kingdoms.
 
-### Struktura `WORLD_DATA`
+### `WORLD_DATA` Structure
 
 ```javascript
 const WORLD_DATA = {
-    // 1. Wielkie Cesarstwo (Zieleń)
+    // 1. Great Empire (Green)
     "default": [
         {
-            name: "NickGracza",
-            rank: "leader", // Rangi: leader, deputy, warmarshal, general, sargent, member, novice
-            castle: { name: "Nazwa Zamku", x: 500, y: 500 },
+            name: "PlayerNick",
+            rank: "leader", // Ranks: leader, deputy, warmarshal, general, sargent, member, novice
+            castle: { name: "Main Castle", x: 500, y: 500 },
             outposts: [
                 { name: "Post 1", x: 502, y: 502 },
                 { name: "Post 2", x: 505, y: 505 }
             ],
-            labs: [],      // Opcjonalne
-            monuments: []  // Opcjonalne
+            labs: [],      // Optional
+            monuments: []  // Optional
         }
     ],
     
-    // 2. Kraina Wiecznych Lodów
-    "lodzik": [
+    // 2. Everwinter Glacier (Ice)
+    "dark": [
         {
-            name: "NickGracza",
+            name: "PlayerNick",
             rank: "leader",
-            castle: { name: "Zamek Zimowy", x: 200, y: 200 },
-            villages: [    // Wioski surowcowe
-                { name: "Wioska Węgla", x: 205, y: 205 }
+            castle: { name: "Winter Castle", x: 200, y: 200 },
+            villages: [    // Resource Villages
+                { name: "Food Village", x: 205, y: 205 }
             ]
         }
     ],
     
-    // 3. Płonące Piaski
-    "piasek": [ ... ],
+    // 3. Burning Sands
+    "satellite": [ ... ],
     
-    // 4. Ogniste Szczyty
-    "szczyty": [ ... ]
+    // 4. Fire Peaks
+    "terrain": [ ... ]
 };
 ```
 
-### Dostępne typy obiektów
-*   `castle` (Zamek główny - wymagany)
-*   `ruin` (Ruiny - alternatywa dla zamku)
-*   `outposts` (Posterunki)
-*   `villages` (Wioski surowcowe - na krainach żywiołowych)
-*   `labs` (Laboratoria)
-*   `monuments` (Monumenty)
+### Available Object Types
+*   `castle` (Main Castle - required)
+*   `ruin` (Ruins - alternative to castle)
+*   `outposts` (Outposts)
+*   `villages` (Resource Villages - in elemental kingdoms)
+*   `labs` (Laboratories)
+*   `monuments` (Monuments)
 
-## 🎨 Personalizacja (`config.js`)
 
-W pliku `js/config.js` możesz dostosować wygląd mapy:
-*   Kolory tła dla poszczególnych królestw (`kingdomBackgrounds`).
-*   Kolory linii i znaczników.
-*   Ścieżki do ikon i grafik (`images`).
-*   Rozmiary obiektów na mapie.
+## 🎨 Customization (`config.js`)
 
-## 🎮 Sterowanie
+In `js/config.js`, you can customize the map's appearance:
+*   Background colors for specific kingdoms (`kingdomBackgrounds`).
+*   Line and marker colors.
+*   Paths to icons and graphics (`images`).
+*   Object sizes on the map.
 
-*   **LPM + Przesunięcie:** Przesuwanie mapy.
-*   **Rolka myszy:** Przybliżanie / Oddalanie (Zoom).
-*   **Kliknięcie (LPM):** Zaznaczenie gracza/obiektu.
-*   **Panel Prawy:** Lista graczy (kliknij, aby wycentrować mapę na obiekcie).
-*   **Panel Lewy:** Wyszukiwarka i filtry widoczności.
 
-## 🛠️ Technologie
+## 🎮 Controls
+
+*   **LMB + Drag:** Pan the map.
+*   **Mouse Wheel:** Zoom In / Zoom Out.
+*   **Click (LMB):** Select player/object.
+*   **Right Panel:** Player list (click to center map on object).
+*   **Left Panel:** Search and visibility filters.
+
+
+## 🛠️ Technologies
 
 *   HTML5
 *   CSS3 (Flexbox, CSS Variables)
 *   JavaScript (ES6+)
-*   Font Awesome 6 (Ikony)
+*   Font Awesome 6 (Icons)
 
 ---
-*Projekt stworzony dla celów edukacyjnych i hobbystycznych.*
-
-***
+*Project created for educational and hobby purposes.*
