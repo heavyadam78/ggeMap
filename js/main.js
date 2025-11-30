@@ -75,8 +75,10 @@ function preloadImages(callback) {
 
 function saveMapSettings() {
     const settings = { x: state.camera.x, y: state.camera.y, zoom: state.camera.zoom, filterposts: state.isPostsVisible,
-        filterlabs: state.isLabsVisible, iconsimages: state.displayingImages};
-
+        filterlabs: state.isLabsVisible, iconsimages: state.displayingImages, filtervillages: state.isVillagesVisible,
+        filterNick: state.isNickVisible, filterlabel: state.isLabelVisible,
+        leftPanelCollapsed: uiElements.searchPanel.classList.contains('collapsed'),
+        rightPanelCollapsed: uiElements.panel.classList.contains('collapsed')};
     localStorage.setItem('gge_map_settings', JSON.stringify(settings));
 }
 
@@ -94,8 +96,31 @@ function loadMapSettings() {
                 } else { uiElements.filterPostsChkbox.checked = state.isPostsVisible; }
             if (!isNaN(s.filterlabs)){ state.isLabsVisible = s.filterlabs; uiElements.filterLabsChkbox.checked = s.filterlabs;
                 } else { uiElements.filterLabsChkbox.checked = state.isLabsVisible; }
+            if (!isNaN(s.filtervillages)){ state.isVillagesVisible = s.filtervillages; uiElements.filterVillagesChkbox.checked = s.filtervillages;
+                } else { uiElements.filterVillagesChkbox.checked = state.isVillagesVisible; }
+            if (!isNaN(s.filterNick)){ state.isNickVisible = s.filterNick; uiElements.filterNickChkbox.checked = s.filterNick;
+                } else { uiElements.filterNickChkbox.checked = state.isNickVisible; }
+            if (!isNaN(s.filterlabel)){ state.isLabelVisible = s.filterlabel; uiElements.filterLabelChkbox.checked = s.filterlabel;
+                } else { uiElements.filterLabelChkbox.checked = state.isLabelVisible; }
             if (!isNaN(s.iconsimages)) { state.displayingImages = s.iconsimages; uiElements.iconsimagesChkbox.checked = s.iconsimages;
-            } else { uiElements.iconsimagesChkbox.checked = state.displayingImages; }
+                } else { uiElements.iconsimagesChkbox.checked = state.displayingImages; }
+            // Prawy Panel (Lista)
+            if (s.rightPanelCollapsed) {
+                uiElements.panel.classList.add('collapsed');
+                uiElements.toggleBtn.querySelector('i').className = 'fa-solid fa-list';
+            } else {
+                uiElements.panel.classList.remove('collapsed');
+                uiElements.toggleBtn.querySelector('i').className = 'fa-solid fa-chevron-right';
+            }
+
+            // Lewy Panel (Ustawienia)
+            if (s.leftPanelCollapsed) {
+                uiElements.searchPanel.classList.add('collapsed');
+                uiElements.toggleSearchBtn.querySelector('i').className = 'fa-solid fa-gear';
+            } else {
+                uiElements.searchPanel.classList.remove('collapsed');
+                uiElements.toggleSearchBtn.querySelector('i').className = 'fa-solid fa-chevron-left';
+            }
         } catch (e) { console.error(e); }
     }
 }

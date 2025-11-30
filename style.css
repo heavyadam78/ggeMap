@@ -429,11 +429,11 @@ ul { list-style: none; }
 }
 
 input:checked + .slider {
-  background-color: #c0392b;;
+  background-color: #c0392b;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #c0392b;;
+  box-shadow: 0 0 1px #c0392b;
 }
 
 input:checked + .slider:before {
@@ -502,4 +502,42 @@ input:checked + .slider:before {
 .custom-select option {
   background: var(--panel-bg);
   color: var(--text-color);
+}
+
+/* --- NOWY STYL PASKA PRZEWIJANIA (FIX) --- */
+
+/* 1. Ustawienie szerokości */
+.tree-container::-webkit-scrollbar,
+.panel-content::-webkit-scrollbar {
+    width: 12px; /* Nieco szerszy obszar klikalny */
+}
+
+/* 2. Tło paska (ścieżka) - przezroczyste */
+.tree-container::-webkit-scrollbar-track,
+.panel-content::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+/* 3. Uchwyt (Thumb) - STAN DOMYŚLNY */
+.tree-container::-webkit-scrollbar-thumb,
+.panel-content::-webkit-scrollbar-thumb {
+    background-color: #555555;       /* Ciemnoszary */
+    border-radius: 10px;             /* Mocne zaokrąglenie */
+    border: 3px solid transparent;   /* Przezroczysta ramka tworzy odstęp! */
+    background-clip: content-box;    /* Kolor tylko wewnątrz treści, nie w ramce */
+    transition: background-color 0.3s; /* Płynne przejście */
+}
+
+/* 4. Uchwyt (Thumb) - PO NAJECHANIU (HOVER) */
+.tree-container::-webkit-scrollbar-thumb:hover,
+.panel-content::-webkit-scrollbar-thumb:hover {
+    background-color: #e74c3c !important; /* Czerwony */
+    border: 3px solid transparent;        /* Utrzymujemy odstęp */
+    background-clip: content-box;
+}
+
+/* 5. Narożnik (dla estetyki, jeśli są dwa paski) */
+.tree-container::-webkit-scrollbar-corner,
+.panel-content::-webkit-scrollbar-corner {
+    background: transparent;
 }

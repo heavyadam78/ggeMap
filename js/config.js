@@ -55,10 +55,10 @@ const CONFIG = {
 
     objSizes: {
         castle: 1.5,
-        outpost: 0.8,
+        outpost: 1.0,
         village: 1.0,
         ruin: 1.0,
-        lab: 0.8,
+        lab: 1.0,
         monument: 0.8
     }
 };

@@ -142,8 +142,9 @@ function togglePanel(forceOpen = false) {
         icon.className = 'fa-solid fa-chevron-right';
     } else {
         uiElements.panel.classList.add('collapsed');
-        icon.className = 'fa-solid fa-chevron-left';
+        icon.className = 'fa-solid fa-list';
     }
+    saveMapSettings();
 }
 
 // Obsługa przycisków paneli
@@ -153,7 +154,9 @@ uiElements.toggleSearchBtn.onclick = () => {
     uiElements.searchPanel.classList.toggle('collapsed');
     const icon = uiElements.toggleSearchBtn.querySelector('i');
     icon.className = uiElements.searchPanel.classList.contains('collapsed') 
-        ? 'fa-solid fa-bug' : 'fa-solid fa-chevron-left';
+        ? 'fa-solid fa-gear' : 'fa-solid fa-chevron-left';
+
+    saveMapSettings();
 };
 
 

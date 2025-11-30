@@ -25,14 +25,14 @@
 
       <!-- UI -->
       <div id="ui-layer">
-        <div id="search-panel" class="ui-panel left-sidebar">
+        <div id="search-panel" class="ui-panel left-sidebar collapsed">
           <!--collapsed">-->
           <button id="toggle-search-btn">
-            <i class="fa-solid fa-bug"></i>
+            <i class="fa-solid fa-gear"></i>
           </button>
 
           <div class="panel-header">
-            <h2>Debug</h2>
+            <h2>Settings</h2>
           </div>
 
           <div class="panel-content">
@@ -53,21 +53,35 @@
 
             <div class="checkbox-group">
               <label class="checkbox-container">
-                <input type="checkbox" id="filter-posts-chkbox"/>
+                <input type="checkbox" id="filter-posts-chkbox" checked/>
                 <span class="checkmark"></span>
                 Posterunki
               </label>
 
               <label class="checkbox-container">
-                <input type="checkbox" id="filter-labs-chkbox"/>
+                <input type="checkbox" id="filter-labs-chkbox" checked/>
                 <span class="checkmark"></span>
                 Laba/Montki
               </label>
 
               <label class="checkbox-container">
-                <input type="checkbox" id="filter-alliances" />
+                <input type="checkbox" id="filter-villages-chkbox" checked/>
                 <span class="checkmark"></span>
-                Temp
+                Wioski
+              </label>
+            </div>
+
+            <hr />
+             <div class="checkbox-group">
+              <label class="checkbox-container">
+                <input type="checkbox" id="filter-nick-chkbox" checked/>
+                <span class="checkmark"></span>
+                Nazwa gracza
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="filter-label-chkbox" checked/>
+                <span class="checkmark"></span>
+                Nazwa obiektu
               </label>
             </div>
 
@@ -94,10 +108,10 @@
         </div>
 
         <!-- PRAWY BOCZNY: Lista Graczy (TreeView) -->
-        <div id="info-panel" class="ui-panel right-sidebar">
+        <div id="info-panel" class="ui-panel right-sidebar collapsed">
           <!-- PRZYCISK TERAZ JEST BEZPOŚREDNIM DZIECKIEM PANELU -->
           <button id="toggle-panel-btn">
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="fa-solid fa-list"></i>
           </button>
 
           <div class="panel-header">

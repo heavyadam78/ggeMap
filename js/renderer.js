@@ -125,23 +125,24 @@ function drawObject(obj, color, isPlayerSelected, isObjectSelected, playerName) 
     
     if (obj.type == 'castle' || obj.type == 'ruin') {
         dotSize = 5;
+        if (tzoom < 30) {labelDown = false;}
         if (tzoom < 75) {
             ctx.fillStyle = color;
             ctx.beginPath(); ctx.arc(pos.x, pos.y, dotSize, 0, Math.PI*2); ctx.fill();
             img = null;
-            labelDown = false;
+            // labelDown = false;
         } else {
             drawW = worldWidth * state.camera.zoom;
         }
 
     } else if (obj.type == 'outpost' || obj.type == 'lab' || obj.type == 'monument' || obj.type == 'village') {
-        if (tzoom < 50) dotSize = 4;
+        if (tzoom < 50) {dotSize = 4 ; labelDown = false;};
         if (tzoom < 30) dotSize = 3;
         if (tzoom < 80) {
             ctx.fillStyle = color;
             ctx.beginPath(); ctx.arc(pos.x, pos.y, dotSize, 0, Math.PI*2); ctx.fill();
             img = null;
-            labelDown = false;
+            // labelDown = false;
         } else {
             drawW = worldWidth * state.camera.zoom;
         }
@@ -179,9 +180,9 @@ function drawObject(obj, color, isPlayerSelected, isObjectSelected, playerName) 
         ctx.fillRect(pos.x - s/2, pos.y - s/2, s, s);
         }}
 
-    if (labelUp) {
+    if (labelUp && state.isNickVisible) {
         if (playerName) {
-        const topY = img ? pos.y - (drawH / 2) - 15 : pos.y - (drawH / 2) - 25
+        const topY = img ? pos.y - (drawH / 2) - 15 : pos.y - (drawH / 2) - 27
         
         drawLabel(ctx, playerName, pos.x, topY, {
             fontSize: Math.max(15, Math.min(35, 0.5 * state.camera.zoom)),
@@ -191,8 +192,10 @@ function drawObject(obj, color, isPlayerSelected, isObjectSelected, playerName) 
         });
     }
     }
-    if (labelDown) {    
-        const bottomY = pos.y + (drawH / 2) + 12;
+    if (labelDown && state.isLabelVisible) {    
+        let bottomY = pos.y + (drawH / 2) + 12;
+        if (!img) bottomY += 7;
+//        uiElements.playerCount.innerText = (5 * state.displayingImages);
         drawLabel(ctx, obj.name, pos.x, bottomY, {
             fontSize: Math.max(15, Math.min(30, 0.4 * state.camera.zoom)),
             fontFamily: CONFIG.fontFamily,

@@ -184,6 +184,23 @@ uiElements.filterLabsChkbox.addEventListener('change', (event) => {
 // *** CHECKBOX - WYŚWIETLANIE POSTERUNKÓW ***
 uiElements.filterPostsChkbox.addEventListener('change', (event) => {
     state.isPostsVisible = event.currentTarget.checked;
-    state.isPostsVisible = event.currentTarget.checked; // To teraz steruje też wioskami
     draw();
+});
+
+// *** CHECKBOX - WYŚWIETLANIE WIOSEK ***
+uiElements.filterVillagesChkbox.addEventListener('change', (event) => {
+    state.isVillagesVisible = event.currentTarget.checked;
+    draw();
+});
+
+// *** CHECKBOX - WYŚWIETLANIE NAZWY GRACZA ***
+uiElements.filterNickChkbox.addEventListener('change', (event) => {
+    state.isNickVisible = event.currentTarget.checked;
+    draw();
+});
+
+// *** CHECKBOX - WYŚWIETLANIE NAZWY OBIEKTU ***
+uiElements.filterLabelChkbox.addEventListener('change', (event) => {
+    state.isLabelVisible = event.currentTarget.checked;
+    draw(); uiElements.playerCount.innerText = state.isLabelVisible;
 });

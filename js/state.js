@@ -8,12 +8,15 @@ const state = {
     selectedObjectId: null,
     isPostsVisible: true,
     isLabsVisible: true,
+    isVillagesVisible: true,
+    isNickVisible: true,
+    isLabelVisible: true,
     displayingImages: false,
     
     camera: {
         x: CONFIG.mapWidth / 2,
         y: CONFIG.mapHeight / 2,
-        zoom: 10,
+        zoom: 0.5,
         minZoom: 0.5,
         maxZoom: 55,
         zoomLevelInt: 0
@@ -40,5 +43,8 @@ const uiElements = {
     toggleSearchBtn: document.getElementById('toggle-search-btn'),
     filterPostsChkbox: document.getElementById('filter-posts-chkbox'),
     filterLabsChkbox: document.getElementById('filter-labs-chkbox'),
+    filterVillagesChkbox: document.getElementById('filter-villages-chkbox'),
+    filterNickChkbox: document.getElementById('filter-nick-chkbox'),
+    filterLabelChkbox: document.getElementById('filter-label-chkbox'),
     iconsimagesChkbox: document.getElementById('icons-images')
 };
