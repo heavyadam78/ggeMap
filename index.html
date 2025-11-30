@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="heavyAdam78">
     <title>Mapa Sojuszu GGE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,10 +24,9 @@
         <canvas id="game-map"></canvas>
       </div>
 
-      <!-- UI -->
       <div id="ui-layer">
+        <!-- LEWY PANEL: Ustawienia -->
         <div id="search-panel" class="ui-panel left-sidebar collapsed">
-          <!--collapsed">-->
           <button id="toggle-search-btn">
             <i class="fa-solid fa-gear"></i>
           </button>
@@ -38,7 +38,6 @@
           <div class="panel-content">
             <div class="search-box">
               <i class="fa-solid fa-magnifying-glass"></i>
-              <!-- Zaktualizowany placeholder -->
               <input
                 type="text"
                 id="player-search"
@@ -107,9 +106,8 @@
           </div>
         </div>
 
-        <!-- PRAWY BOCZNY: Lista Graczy (TreeView) -->
+        <!-- PRAWY PANEL: Lista Graczy (TreeView) -->
         <div id="info-panel" class="ui-panel right-sidebar collapsed">
-          <!-- PRZYCISK TERAZ JEST BEZPOŚREDNIM DZIECKIEM PANELU -->
           <button id="toggle-panel-btn">
             <i class="fa-solid fa-list"></i>
           </button>
@@ -117,8 +115,7 @@
           <div class="panel-header">
             <h2>Członkowie Sojuszu</h2>
           </div>
-
-<!-- Select/Dropdown -->
+              <!-- Select/Dropdown -->
               <div class="select-group">
                 <label style="margin-left: 10px;" for="map-theme">Królestwa</label>
                 <select id="map-theme" class="custom-select">
@@ -128,17 +125,13 @@
                   <option value="szczyty">Ogniste Szczyty</option>
                 </select>
               </div>
-
-
-
           <div class="tree-container">
             <ul id="alliance-tree">
-              <!-- Lista generowana przez JS -->
+              <!-- js/main.js -> prepareData() -->
             </ul>
           </div>
         </div>
 
-        <!-- KONTROLERY -->
         <div class="ui-panel bottom-right">
           <button class="control-btn" id="zoom-in">
             <i class="fa-solid fa-plus"></i>
@@ -153,8 +146,7 @@
       </div>
     </div>
 
-    <!-- OKNO ZGODY (MODAL) -->
-    <!-- Domyślnie ukryte klasą 'hidden', JS je odkryje jeśli trzeba -->
+    <!-- MODAL -->
     <div id="consent-modal" class="modal-overlay hidden">
       <div class="modal-content">
         <div class="modal-header">

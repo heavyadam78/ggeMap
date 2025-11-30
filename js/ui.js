@@ -1,4 +1,3 @@
-// Budowanie drzewa
 function buildTreeView(players) {
     uiElements.treeList.innerHTML = '';
     
@@ -34,12 +33,12 @@ function buildTreeView(players) {
             ulChildren.appendChild(createObjectNode(post, 'outpost', player.id));
         });
 
-        // 3. Wioski (NOWE)
+        // 3. Wioski
         player.villages.forEach(vil => {
             ulChildren.appendChild(createObjectNode(vil, 'village', player.id));
         });
 
-        // 4. Laby i Monumenty
+        // 4. Laby i Montki
         player.labs.forEach(lab => {
             ulChildren.appendChild(createObjectNode(lab, 'lab', player.id));
         });
@@ -61,7 +60,6 @@ function createObjectNode(obj, type, playerId) {
     li.id = `obj-li-${obj.id}`;
     
     let iconSrc = CONFIG.images[type] || CONFIG.images['icon' + type];
-    // Fallbacki ikon
     if (type === 'village') iconSrc = CONFIG.images.iconvillage || CONFIG.images.iconoutpost;
     if (type === 'castle') iconSrc = CONFIG.images.iconcastle;
     if (type === 'ruin') iconSrc = CONFIG.images.iconruin;
@@ -80,8 +78,6 @@ function createObjectNode(obj, type, playerId) {
     return li;
 }
 
-// Logika wyboru
-// Musisz też zaktualizować handleSelection w js/ui.js aby szukało wiosek przy centrowaniu
 function handleSelection(playerId, objectId, shouldCenter) {
     if (uiElements.panel.classList.contains('collapsed')) {
         togglePanel(true);
@@ -98,12 +94,10 @@ function handleSelection(playerId, objectId, shouldCenter) {
         let target = null;
         if (player.castle.id === objectId) target = player.castle;
         else target = player.outposts.find(o => o.id === objectId);
-        
+
         if (!target) target = player.labs.find(l => l.id === objectId);
         if (!target) target = player.monuments.find(m => m.id === objectId);
-        // --- NOWE ---
         if (!target) target = player.villages.find(v => v.id === objectId);
-        // ------------
 
         if (target) centerMapOn(target.x, target.y);
     } else {
@@ -147,7 +141,6 @@ function togglePanel(forceOpen = false) {
     saveMapSettings();
 }
 
-// Obsługa przycisków paneli
 uiElements.toggleBtn.onclick = () => togglePanel();
 
 uiElements.toggleSearchBtn.onclick = () => {

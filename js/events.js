@@ -1,4 +1,4 @@
-// Mysz
+
 canvas.addEventListener('mousedown', (e) => {
     state.mouse.isDown = true;
     state.mouse.startX = e.clientX;
@@ -45,7 +45,6 @@ canvas.addEventListener('click', (e) => {
         
         if (state.isPostsVisible) {
             if (player.outposts.some(checkHit)) break;
-            // --- NOWE: Sprawdzanie wiosek ---
             if (player.villages.some(checkHit)) break;
         }
 
@@ -81,7 +80,6 @@ canvas.addEventListener('wheel', (e) => {
     draw();
 });
 
-// Wyszukiwarka i Input
 const COORD_REGEX = /^(\d{1,4})[:\s\/;,-](\d{1,4})$/;
 
 uiElements.searchInput.addEventListener('input', (e) => {
@@ -117,7 +115,6 @@ uiElements.searchInput.addEventListener('keydown', (e) => {
     }
 });
 
-// Kontrolery Zoom
 document.getElementById('zoom-in').onclick = () => { 
     state.camera.zoom = Math.min(state.camera.maxZoom, state.camera.zoom * 1.2); 
     updateZoomInt(); uiElements.zoomLevel.innerText = state.camera.zoomLevelInt; draw(); 
@@ -141,30 +138,24 @@ window.addEventListener('beforeunload', () => {
     saveMapSettings();
 });
 
-// --- NOWE: Obsługa zmiany królestwa ---
 const mapThemeSelect = document.getElementById('map-theme');
 if (mapThemeSelect) {
     mapThemeSelect.addEventListener('change', (e) => {
         const selectedKingdom = e.target.value;
         
-        // 1. Aktualizuj stan
         state.currentKingdom = selectedKingdom;
         
-        // 2. Pobierz nowe dane
         if (WORLD_DATA[selectedKingdom]) {
             state.players = prepareData(WORLD_DATA[selectedKingdom]);
         } else {
-            state.players = []; // Pusta mapa jeśli brak danych
+            state.players = [];
         }
 
-        // 3. Reset widoku (opcjonalne, ale zalecane przy zmianie mapy)
         state.selectedPlayerId = null;
         state.selectedObjectId = null;
         
-        // 4. Przebuduj drzewo graczy
         buildTreeView(state.players);
         
-        // 5. Przerysuj
         draw();
     });
 }

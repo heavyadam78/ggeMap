@@ -1,11 +1,7 @@
-// Przygotowanie danych (ID i Typy)
-// Wklej to do pliku js/utils.js podmieniając starą funkcję
 
 function prepareData(rawData) {
     if (!rawData) return [];
 
-    // 1. Filtrujemy dane - odrzucamy wpisy, które nie mają zamku ani ruiny
-    // To zabezpiecza przed błędem "Cannot read properties of undefined"
     const validPlayers = rawData.filter(p => p.castle || p.ruin);
 
     return validPlayers.map((player, pIndex) => {
@@ -16,14 +12,12 @@ function prepareData(rawData) {
             ...player,
             id: pIndex,
             
-            // Główny zamek (gwarantowany dzięki filtrowaniu wyżej)
             castle: {
                 ...rawMainBase,
                 id: `p${pIndex}-main`,
                 type: baseType
             },
             
-            // Bezpieczne mapowanie (jeśli brak tablicy, wstawiamy pustą [])
             outposts: (player.outposts || []).map((post, oIndex) => ({
                 ...post,
                 id: `p${pIndex}-post${oIndex}`,
@@ -104,7 +98,7 @@ function loadMapSettings() {
                 } else { uiElements.filterLabelChkbox.checked = state.isLabelVisible; }
             if (!isNaN(s.iconsimages)) { state.displayingImages = s.iconsimages; uiElements.iconsimagesChkbox.checked = s.iconsimages;
                 } else { uiElements.iconsimagesChkbox.checked = state.displayingImages; }
-            // Prawy Panel (Lista)
+            // Prawy Panel
             if (s.rightPanelCollapsed) {
                 uiElements.panel.classList.add('collapsed');
                 uiElements.toggleBtn.querySelector('i').className = 'fa-solid fa-list';
@@ -112,8 +106,7 @@ function loadMapSettings() {
                 uiElements.panel.classList.remove('collapsed');
                 uiElements.toggleBtn.querySelector('i').className = 'fa-solid fa-chevron-right';
             }
-
-            // Lewy Panel (Ustawienia)
+            // Lewy Panel
             if (s.leftPanelCollapsed) {
                 uiElements.searchPanel.classList.add('collapsed');
                 uiElements.toggleSearchBtn.querySelector('i').className = 'fa-solid fa-gear';
@@ -133,21 +126,16 @@ async function init() {
     canvas.height = window.innerHeight;
     
     if (typeof WORLD_DATA !== 'undefined') {
-        // Domyślnie ładujemy "default" (Zieleń) lub to co było zapisane
-        // (można rozbudować loadMapSettings o zapisywanie wybranego królestwa)
-        
+
         let initialKingdom = 'default';
-        // Proste sprawdzenie czy mamy zapisane ustawienia (opcjonalne)
         /*
         const saved = JSON.parse(localStorage.getItem('gge_map_settings') || '{}');
         if(saved.kingdom && WORLD_DATA[saved.kingdom]) initialKingdom = saved.kingdom;
         */
         
-        // Ustawiamy select w HTML na odpowiednią wartość
         const mapThemeSelect = document.getElementById('map-theme');
         if(mapThemeSelect) mapThemeSelect.value = initialKingdom;
 
-        // Ładujemy dane
         state.currentKingdom = initialKingdom;
         state.players = prepareData(WORLD_DATA[initialKingdom]);
         
@@ -165,5 +153,5 @@ async function init() {
     }
 }
 
-// Start
+// jedziem z koksem :P
 init();

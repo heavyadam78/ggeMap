@@ -51,19 +51,17 @@ canvas { display: block; }
 }
 .status-bar { font-size: 0.8rem; color: #aaa; }
 
-/* LEWY BOCZNY - WYSZUKIWARKA */
+/* LEWY BOCZNY - USTAWIENIA */
 .left-sidebar {
     position: absolute;
     top: 0;
-    left: 0; /* Przyklejony do lewej */
+    left: 0;
     bottom: 0;
     width: 300px;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 100;
-    
-    /* Wygląd */
     border-radius: 0;
     border-left: none;
     border-top: none;
@@ -71,8 +69,6 @@ canvas { display: block; }
     background: var(--panel-bg);
     border-right: 1px solid var(--border-color);
 }
-
-/* Stan zwinięty - chowa się w lewo (-100%) */
 .left-sidebar.collapsed {
     transform: translateX(-100%);
 }
@@ -81,13 +77,13 @@ canvas { display: block; }
 #toggle-search-btn {
     position: absolute;
     top: 20px;
-    right: -40px; /* Wystaje poza panel w prawo */
+    right: -40px;
     width: 40px;
     height: 40px;
     background: var(--panel-bg);
     border: 1px solid var(--border-color);
     border-left: none;
-    border-radius: 0 8px 8px 0; /* Zaokrąglenie z prawej */
+    border-radius: 0 8px 8px 0;
     color: var(--accent-color);
     cursor: pointer;
     font-size: 1.2rem;
@@ -96,25 +92,20 @@ canvas { display: block; }
     justify-content: center;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 }
-
-/* Dostosowanie wnętrza panelu */
 .left-sidebar .panel-content {
     padding: 20px;
 }
-
 .search-hint {
     margin-top: 5px;
     color: #888;
     font-size: 0.8rem;
     text-align: center;
 }
-
 .left-sidebar hr {
     border: 0;
     border-top: 1px solid #444;
     margin: 20px 0;
 }
-
 .status-bar p {
     margin-bottom: 10px;
     font-size: 0.9rem;
@@ -125,23 +116,20 @@ canvas { display: block; }
 .right-sidebar {
     position: absolute;
     top: 0;
-    right: 0; /* Przyklejony do krawędzi */
+    right: 0;
     bottom: 0;
-    width: 320px; /* Stała szerokość */
+    width: 320px;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 100; /* Musi być nad mapą */
-    border-radius: 0; /* Prostokątny przy krawędzi */
+    z-index: 100;
+    border-radius: 0;
     border-right: none;
     border-top: none;
     border-bottom: none;
-    /* Tło i ramka */
     background: var(--panel-bg);
     border-left: 1px solid var(--border-color);
 }
-
-/* Stan zwinięty panelu - chowa się w prawo o 100% swojej szerokości */
 .right-sidebar.collapsed {
     transform: translateX(100%);
 }
@@ -158,28 +146,28 @@ canvas { display: block; }
     margin: 0;
 }
 
-/* Przycisk toggle jako "zakładka" wystająca z panelu */
+/* Przycisk toggle */
 #toggle-panel-btn {
     position: absolute;
-    top: 20px;      /* Odległość od góry */
-    left: -40px;    /* Wystaje w lewo poza panel */
+    top: 20px;
+    left: -40px;
     width: 40px;
     height: 40px;
     background: var(--panel-bg);
     border: 1px solid var(--border-color);
-    border-right: none; /* Żeby się ładnie łączyło z panelem */
-    border-radius: 8px 0 0 8px; /* Zaokrąglenie tylko z lewej */
+    border-right: none;
+    border-radius: 8px 0 0 8px;
     color: var(--accent-color);
     cursor: pointer;
     font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: -2px 2px 5px rgba(0,0,0,0.3); /* Cień tylko z lewej */
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.3);
 }
 
 
-/* Lista drzewiasta */
+/* Lista */
 .tree-container {
     flex: 1;
     overflow-y: auto;
@@ -197,8 +185,8 @@ ul { list-style: none; }
     display: flex; justify-content: space-between; align-items: center;
     font-weight: bold;
     border-bottom: 1px solid #333;
-    cursor: pointer;      /* Zmienia kursor na łapkę */
-    user-select: none;    /* Zapobiega zaznaczaniu tekstu */
+    cursor: pointer;
+    user-select: none;
 }
 .player-node:hover { background: #333; }
 .player-node.active { background: var(--highlight-bg); color: var(--accent-color); border-left: 3px solid var(--accent-color); }
@@ -207,8 +195,7 @@ ul { list-style: none; }
 
 /* Lista dzieci (obiekty) */
 .tree-children {
-    /* font-family: Cinzel; */
-    display: none; /* Domyślnie zwinięte */
+     display: none;
     padding-left: 0px;
     margin-top: 5px;
     margin-bottom: 10px;
@@ -216,18 +203,17 @@ ul { list-style: none; }
 .tree-children.expanded { display: block; }
 
 .object-node {
-    /* ... poprzednie style ... */
-    border: 1px solid transparent; /* Rezerwujemy miejsce na ramkę */
+    border: 1px solid transparent;
     transition: all 0.2s;
-    cursor: pointer;      /* Zmienia kursor na łapkę */
-    user-select: none;    /* Zapobiega zaznaczaniu tekstu */
+    cursor: pointer;
+    user-select: none;
     list-style: none;
 
 }
 
 /* Styl dla aktywnego obiektu na liście */
 .object-node.active-object {
-    background-color: rgba(231, 76, 60, 0.3); /* Czerwony półprzezroczysty */
+    background-color: rgba(231, 76, 60, 0.3);
     border-color: var(--accent-color);
     color: #fff;
 }
@@ -245,11 +231,9 @@ ul { list-style: none; }
     transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 90;
 }
-/* Gdy panel jest schowany, przesuń kontrolery do krawędzi */
 .right-sidebar.collapsed ~ .bottom-right {
     right: 20px;
 }
-
 .control-btn {
     width: 40px; height: 40px; border-radius: 50%; border: none;
     background: var(--accent-color); color: white; font-size: 1.2rem;
@@ -258,26 +242,23 @@ ul { list-style: none; }
 .control-btn:hover { background: #c0392b; }
 
 /* --- MODAL (OKNO ZGODY) --- */
-
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); /* Ciemne tło pod spodem */
-    z-index: 2000; /* Musi być nad wszystkim (mapa ma z-index 100) */
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 1;
     transition: opacity 0.3s ease;
 }
-
 .modal-overlay.hidden {
-    display: none; /* Ukrywanie */
+    display: none;
 }
-
 .modal-content {
     background: var(--panel-bg);
     border: 1px solid var(--border-color);
@@ -290,7 +271,6 @@ ul { list-style: none; }
     transform: translateY(0);
     transition: transform 0.3s ease;
 }
-
 .modal-header {
     background: rgba(0, 0, 0, 0.3);
     padding: 15px 20px;
@@ -299,21 +279,17 @@ ul { list-style: none; }
     border-bottom: 1px solid var(--border-color);
     font-weight: bold;
 }
-
 .modal-body {
     padding: 20px;
     line-height: 1.6;
 }
-
 .modal-body ul {
     margin: 10px 0 15px 20px;
     color: #ccc;
 }
-
 .modal-body small {
     color: #888;
 }
-
 .modal-footer {
     padding: 15px 20px;
     border-top: 1px solid var(--border-color);
@@ -331,7 +307,6 @@ ul { list-style: none; }
     cursor: pointer;
     transition: background 0.2s;
 }
-
 .action-btn:hover {
     background-color: #c0392b;
 }
@@ -343,7 +318,6 @@ ul { list-style: none; }
   gap: 12px;
   margin-bottom: 15px;
 }
-
 .checkbox-container {
   display: flex;
   align-items: center;
@@ -352,15 +326,12 @@ ul { list-style: none; }
   color: var(--text-color);
   transition: color 0.2s;
 }
-
 .checkbox-container:hover {
   color: #fff;
 }
-
 .checkbox-container input {
   display: none;
 }
-
 .checkmark {
   width: 18px;
   height: 18px;
@@ -371,12 +342,10 @@ ul { list-style: none; }
   position: relative;
   transition: all 0.2s;
 }
-
 .checkbox-container input:checked + .checkmark {
   background: var(--accent-color);
   border-color: var(--accent-color);
 }
-
 .checkbox-container input:checked + .checkmark::after {
   content: "✓";
   position: absolute;
@@ -386,17 +355,12 @@ ul { list-style: none; }
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-
-/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
   width: 40px;
   height: 20px;
 }
-
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
@@ -415,7 +379,6 @@ ul { list-style: none; }
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .slider:before {
   position: absolute;
   content: "";
@@ -427,15 +390,12 @@ ul { list-style: none; }
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 input:checked + .slider {
   background-color: #c0392b;
 }
-
 input:focus + .slider {
   box-shadow: 0 0 1px #c0392b;
 }
-
 input:checked + .slider:before {
   -webkit-transform: translateX(18px);
   -ms-transform: translateX(18px);
@@ -446,24 +406,20 @@ input:checked + .slider:before {
 .slider.round {
   border-radius: 34px;
 }
-
 .slider.round:before {
   border-radius: 50%;
 }
-
 .switch-wrapper {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-
 .switch {
   position: relative;
   display: inline-block;
   width: 40px;
   height: 20px;
 }
-
 .switch input {
   opacity: 0;
   width: 0;
@@ -474,14 +430,12 @@ input:checked + .slider:before {
 .select-group {
     margin: 10px 20px;
 }
-
 .select-group label {
   display: block;
   margin-bottom: 8px;
   font-size: 0.9rem;
   color: var(--text-color);
 }
-
 .custom-select {
   width: 100%;
   padding: 8px 12px;
@@ -494,49 +448,37 @@ input:checked + .slider:before {
   outline: none;
   transition: border-color 0.2s;
 }
-
 .custom-select:focus {
   border-color: var(--accent-color);
 }
-
 .custom-select option {
   background: var(--panel-bg);
   color: var(--text-color);
 }
 
-/* --- NOWY STYL PASKA PRZEWIJANIA (FIX) --- */
-
-/* 1. Ustawienie szerokości */
+/* --- NOWY STYL PASKA PRZEWIJANIA --- */
 .tree-container::-webkit-scrollbar,
 .panel-content::-webkit-scrollbar {
-    width: 12px; /* Nieco szerszy obszar klikalny */
+    width: 12px;
 }
-
-/* 2. Tło paska (ścieżka) - przezroczyste */
 .tree-container::-webkit-scrollbar-track,
 .panel-content::-webkit-scrollbar-track {
     background: transparent; 
 }
-
-/* 3. Uchwyt (Thumb) - STAN DOMYŚLNY */
 .tree-container::-webkit-scrollbar-thumb,
 .panel-content::-webkit-scrollbar-thumb {
-    background-color: #555555;       /* Ciemnoszary */
-    border-radius: 10px;             /* Mocne zaokrąglenie */
-    border: 3px solid transparent;   /* Przezroczysta ramka tworzy odstęp! */
-    background-clip: content-box;    /* Kolor tylko wewnątrz treści, nie w ramce */
-    transition: background-color 0.3s; /* Płynne przejście */
+    background-color: #555555;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    transition: background-color 0.3s;
 }
-
-/* 4. Uchwyt (Thumb) - PO NAJECHANIU (HOVER) */
 .tree-container::-webkit-scrollbar-thumb:hover,
 .panel-content::-webkit-scrollbar-thumb:hover {
-    background-color: #e74c3c !important; /* Czerwony */
-    border: 3px solid transparent;        /* Utrzymujemy odstęp */
+    background-color: #e74c3c !important;
+    border: 3px solid transparent;
     background-clip: content-box;
 }
-
-/* 5. Narożnik (dla estetyki, jeśli są dwa paski) */
 .tree-container::-webkit-scrollbar-corner,
 .panel-content::-webkit-scrollbar-corner {
     background: transparent;

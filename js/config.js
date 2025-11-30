@@ -1,16 +1,15 @@
 const CONFIG = {
     mapWidth: 1286,
     mapHeight: 1286,
-    fontFamily: "'Cinzel', sans-serif",
-    // Definicje tła dla każdego królestwa
+    fontFamily: "'Verdana', sans",
     kingdomBackgrounds: {
-        default: '#1b6b26ff',   // Wielkie Cesarstwo
-        lodzik: '#4b6584',        // Kraina Wiecznych Lodów
-        piasek: '#c2a16dff',   // Płonące Piaski
-        szczyty: '#2c0808'      // Ogniste Szczyty
+        default: '#1b6b26ff',
+        lodzik: '#4b6584',
+        piasek: '#c2a16dff',
+        szczyty: '#2c0808'
     },
     colors: {
-        background: '#1b6b26ff',        //#2c3e50',
+        background: '#2c3e50',
         castle: '#f1c40f',
         outpost: '#e67e22',
         village: '#16a085',
