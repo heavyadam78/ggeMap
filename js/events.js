@@ -31,7 +31,6 @@ canvas.addEventListener('click', (e) => {
     let foundObjectId = null;
 
     for (const player of state.players) {
-        // Pomocnicza funkcja sprawdzająca trafienie
         const checkHit = (obj) => {
             const center = { x: obj.x + 0.5, y: obj.y + 0.5 };
             if (dist(mousePos, center) < tolerance) {
@@ -42,13 +41,18 @@ canvas.addEventListener('click', (e) => {
             return false;
         };
 
-        // Sprawdzamy po kolei
         if (checkHit(player.castle)) break;
         
-        // Używamy pętli 'some' żeby przerwać jak znajdziemy
-        if (player.outposts.some(checkHit)) break;
-        if (player.labs.some(checkHit)) break;      // NOWE
-        if (player.monuments.some(checkHit)) break; // NOWE
+        if (state.isPostsVisible) {
+            if (player.outposts.some(checkHit)) break;
+            // --- NOWE: Sprawdzanie wiosek ---
+            if (player.villages.some(checkHit)) break;
+        }
+
+        if (state.isLabsVisible) {
+            if (player.labs.some(checkHit)) break;
+            if (player.monuments.some(checkHit)) break;
+        }
     }
 
     if (foundPlayerId !== null) {
@@ -60,6 +64,7 @@ canvas.addEventListener('click', (e) => {
         draw();
     }
 });
+
 
 canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
@@ -136,32 +141,49 @@ window.addEventListener('beforeunload', () => {
     saveMapSettings();
 });
 
+// --- NOWE: Obsługa zmiany królestwa ---
+const mapThemeSelect = document.getElementById('map-theme');
+if (mapThemeSelect) {
+    mapThemeSelect.addEventListener('change', (e) => {
+        const selectedKingdom = e.target.value;
+        
+        // 1. Aktualizuj stan
+        state.currentKingdom = selectedKingdom;
+        
+        // 2. Pobierz nowe dane
+        if (WORLD_DATA[selectedKingdom]) {
+            state.players = prepareData(WORLD_DATA[selectedKingdom]);
+        } else {
+            state.players = []; // Pusta mapa jeśli brak danych
+        }
+
+        // 3. Reset widoku (opcjonalne, ale zalecane przy zmianie mapy)
+        state.selectedPlayerId = null;
+        state.selectedObjectId = null;
+        
+        // 4. Przebuduj drzewo graczy
+        buildTreeView(state.players);
+        
+        // 5. Przerysuj
+        draw();
+    });
+}
+
 // *** CHECKBOX - IKONY / OBRAZY ***
 uiElements.iconsimagesChkbox.addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        state.displayingImages = true;
-    } else {
-        state.displayingImages = false;
-    }
+    state.displayingImages = event.currentTarget.checked;
     draw();
 });
 
 // *** CHECKBOX - WYŚWIETLANIE LABOLATORIÓW / MONUMENTÓW ***
 uiElements.filterLabsChkbox.addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        state.isLabsVisible = true;
-    } else {
-        state.isLabsVisible = false;
-    }
+    state.isLabsVisible = event.currentTarget.checked;
     draw();
 });
 
 // *** CHECKBOX - WYŚWIETLANIE POSTERUNKÓW ***
 uiElements.filterPostsChkbox.addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-        state.isPostsVisible = true;
-    } else {
-        state.isPostsVisible = false;
-    }
+    state.isPostsVisible = event.currentTarget.checked;
+    state.isPostsVisible = event.currentTarget.checked; // To teraz steruje też wioskami
     draw();
 });

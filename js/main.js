@@ -1,7 +1,14 @@
 // Przygotowanie danych (ID i Typy)
+// Wklej to do pliku js/utils.js podmieniając starą funkcję
+
 function prepareData(rawData) {
     if (!rawData) return [];
-    return rawData.map((player, pIndex) => {
+
+    // 1. Filtrujemy dane - odrzucamy wpisy, które nie mają zamku ani ruiny
+    // To zabezpiecza przed błędem "Cannot read properties of undefined"
+    const validPlayers = rawData.filter(p => p.castle || p.ruin);
+
+    return validPlayers.map((player, pIndex) => {
         const rawMainBase = player.ruin || player.castle;
         const baseType = player.ruin ? 'ruin' : 'castle';
 
@@ -9,16 +16,24 @@ function prepareData(rawData) {
             ...player,
             id: pIndex,
             
+            // Główny zamek (gwarantowany dzięki filtrowaniu wyżej)
             castle: {
                 ...rawMainBase,
                 id: `p${pIndex}-main`,
                 type: baseType
             },
             
+            // Bezpieczne mapowanie (jeśli brak tablicy, wstawiamy pustą [])
             outposts: (player.outposts || []).map((post, oIndex) => ({
                 ...post,
                 id: `p${pIndex}-post${oIndex}`,
                 type: 'outpost'
+            })),
+
+            villages: (player.villages || []).map((vil, vIndex) => ({
+                ...vil,
+                id: `p${pIndex}-vil${vIndex}`,
+                type: 'village'
             })),
 
             labs: (player.labs || []).map((lab, lIndex) => ({
@@ -35,7 +50,6 @@ function prepareData(rawData) {
         };
     });
 }
-
 function preloadImages(callback) {
     const sources = CONFIG.images;
     let loadedCount = 0;
@@ -93,8 +107,25 @@ async function init() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    if (typeof GAME_DATA !== 'undefined') {
-        state.players = prepareData(GAME_DATA);
+    if (typeof WORLD_DATA !== 'undefined') {
+        // Domyślnie ładujemy "default" (Zieleń) lub to co było zapisane
+        // (można rozbudować loadMapSettings o zapisywanie wybranego królestwa)
+        
+        let initialKingdom = 'default';
+        // Proste sprawdzenie czy mamy zapisane ustawienia (opcjonalne)
+        /*
+        const saved = JSON.parse(localStorage.getItem('gge_map_settings') || '{}');
+        if(saved.kingdom && WORLD_DATA[saved.kingdom]) initialKingdom = saved.kingdom;
+        */
+        
+        // Ustawiamy select w HTML na odpowiednią wartość
+        const mapThemeSelect = document.getElementById('map-theme');
+        if(mapThemeSelect) mapThemeSelect.value = initialKingdom;
+
+        // Ładujemy dane
+        state.currentKingdom = initialKingdom;
+        state.players = prepareData(WORLD_DATA[initialKingdom]);
+        
         buildTreeView(state.players);
         checkConsent();
         loadMapSettings();
@@ -102,11 +133,10 @@ async function init() {
 
         preloadImages(() => {
             console.log("Start aplikacji.");
-
             draw();
         });
     } else {
-        alert("Brak pliku data.js!");
+        alert("Brak danych (WORLD_DATA) w data.js!");
     }
 }
 

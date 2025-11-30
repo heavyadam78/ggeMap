@@ -1,12 +1,13 @@
 function draw() {
-    // 1. Tło
-    ctx.fillStyle = CONFIG.colors.background;
+    // 1. Tło dynamiczne zależne od królestwa
+    const bg = CONFIG.kingdomBackgrounds[state.currentKingdom] || CONFIG.colors.background;
+    ctx.fillStyle = bg;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 2. Siatka
+    // 2. Siatka (bez zmian)
     drawGrid();
 
-    // 3. Granice mapy
+    // 3. Granice mapy (bez zmian)
     const tl = worldToScreen(0, 0);
     const br = worldToScreen(CONFIG.mapWidth, CONFIG.mapHeight);
     ctx.strokeStyle = '#34495e';
@@ -22,36 +23,36 @@ function draw() {
         
         const cPos = worldToScreen(player.castle.x + 0.5, player.castle.y + 0.5);
 
-        // Funkcja pomocnicza do rysowania linii
         const drawLineTo = (obj) => {
             const pPos = worldToScreen(obj.x + 0.5, obj.y + 0.5);
             ctx.beginPath(); ctx.moveTo(cPos.x, cPos.y); ctx.lineTo(pPos.x, pPos.y); ctx.stroke();
         };
 
-        // linie do obiektów
-        if (state.isPostsVisible) player.outposts.forEach(post => drawLineTo(post));
-        if (state.isLabsVisible) player.labs.forEach(lab => drawLineTo(lab));
-        if (state.isLabsVisible) player.monuments.forEach(mon => drawLineTo(mon));
-
-        if (state.isLabsVisible) {
-            // Laboratoria
-            player.labs.forEach(lab => {
-                drawObject(lab, CONFIG.colors.lab, 6, isPlayerSelected, lab.id === state.selectedObjectId, null);
-            });
-            // Monumenty
-            player.monuments.forEach(mon => {
-                drawObject(mon, CONFIG.colors.monument, 6, isPlayerSelected, mon.id === state.selectedObjectId, null);
-            });
-        }
-        // Posterunki
+        // Linie
         if (state.isPostsVisible) {
-            player.outposts.forEach(post => {
-                drawObject(post, CONFIG.colors.outpost, 6, isPlayerSelected, post.id === state.selectedObjectId, null);
-            });
+            player.outposts.forEach(post => drawLineTo(post));
+            // --- NOWE: Linie do wiosek ---
+            player.villages.forEach(vil => drawLineTo(vil));
         }
-        // Zamek
-        drawObject(player.castle, CONFIG.colors[player.castle.type] || CONFIG.colors.castle, 10, isPlayerSelected, player.castle.id === state.selectedObjectId, player.name);
+        if (state.isLabsVisible) {
+            player.labs.forEach(lab => drawLineTo(lab));
+            player.monuments.forEach(mon => drawLineTo(mon));
+        }
 
+        // Rysowanie obiektów
+        if (state.isLabsVisible) {
+            player.labs.forEach(lab => drawObject(lab, CONFIG.colors.lab, isPlayerSelected, lab.id === state.selectedObjectId, null));
+            player.monuments.forEach(mon => drawObject(mon, CONFIG.colors.monument, isPlayerSelected, mon.id === state.selectedObjectId, null));
+        }
+
+        if (state.isPostsVisible) {
+            player.outposts.forEach(post => drawObject(post, CONFIG.colors.outpost, isPlayerSelected, post.id === state.selectedObjectId, null));
+            // --- NOWE: Rysowanie wiosek ---
+            player.villages.forEach(vil => drawObject(vil, CONFIG.colors.village, isPlayerSelected, vil.id === state.selectedObjectId, null));
+        }
+
+        // Zamek
+        drawObject(player.castle, CONFIG.colors[player.castle.type] || CONFIG.colors.castle, isPlayerSelected, player.castle.id === state.selectedObjectId, player.name);
     });
 }
 
@@ -105,7 +106,9 @@ function drawGrid() {
 
 
 
-function drawObject(obj, color, size, isPlayerSelected, isObjectSelected, playerName) {
+// js/renderer.js - Podmień funkcję drawObject
+
+function drawObject(obj, color, isPlayerSelected, isObjectSelected, playerName) {
     const pos = worldToScreen(obj.x + 0.5, obj.y + 0.5);
     if (pos.x < -200 || pos.x > canvas.width + 200 || pos.y < -200 || pos.y > canvas.height + 200) return;
 
@@ -131,7 +134,7 @@ function drawObject(obj, color, size, isPlayerSelected, isObjectSelected, player
             drawW = worldWidth * state.camera.zoom;
         }
 
-    } else if (obj.type == 'outpost' || obj.type == 'lab' || obj.type == 'monument') {
+    } else if (obj.type == 'outpost' || obj.type == 'lab' || obj.type == 'monument' || obj.type == 'village') {
         if (tzoom < 50) dotSize = 4;
         if (tzoom < 30) dotSize = 3;
         if (tzoom < 80) {
@@ -139,7 +142,6 @@ function drawObject(obj, color, size, isPlayerSelected, isObjectSelected, player
             ctx.beginPath(); ctx.arc(pos.x, pos.y, dotSize, 0, Math.PI*2); ctx.fill();
             img = null;
             labelDown = false;
-            uiElements.playerCount.innerText = 'outpost';
         } else {
             drawW = worldWidth * state.camera.zoom;
         }

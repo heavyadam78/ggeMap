@@ -39,25 +39,6 @@ function updateZoomInt() {
     cam.zoomLevelInt = Math.max(0, Math.min(maxLevels, level));
 }
 
-// Pobieranie stylu rysowania (LOD Config)
-// function getRenderStyle(zoomLvl) {
-//     const rules = CONFIG.lod;
-//     let currentOpacity = 1.0;
-
-//     if (rules.opacitySteps) {
-//         for (const step of rules.opacitySteps) {
-//             if (zoomLvl >= step.minLvl) currentOpacity = step.val;
-//         }
-//     }
-
-//     return {
-//         mode: (zoomLvl < rules.simpleModeThreshold) ? 'dot' : 'icon',
-//         showLabel: (zoomLvl >= rules.labelsThreshold),
-//         lockScale: (zoomLvl >= rules.lockScaleThreshold),
-//         opacity: currentOpacity
-//     };
-// }
-
 // Centrowanie mapy
 function centerMapOn(x, y) {
     state.camera.x = x + 0.5;

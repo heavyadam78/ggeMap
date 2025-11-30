@@ -2,6 +2,12 @@
 function buildTreeView(players) {
     uiElements.treeList.innerHTML = '';
     
+    if (!players || players.length === 0) {
+        uiElements.treeList.innerHTML = '<li style="padding:10px; text-align:center; color:#888;">Brak danych dla tego królestwa</li>';
+        uiElements.playerCount.innerText = '0';
+        return;
+    }
+
     players.forEach(player => {
         const li = document.createElement('li');
         li.id = `player-li-${player.id}`;
@@ -28,12 +34,15 @@ function buildTreeView(players) {
             ulChildren.appendChild(createObjectNode(post, 'outpost', player.id));
         });
 
-        // 3. Laboratoria (NOWE)
+        // 3. Wioski (NOWE)
+        player.villages.forEach(vil => {
+            ulChildren.appendChild(createObjectNode(vil, 'village', player.id));
+        });
+
+        // 4. Laby i Monumenty
         player.labs.forEach(lab => {
             ulChildren.appendChild(createObjectNode(lab, 'lab', player.id));
         });
-
-        // 4. Monumenty (NOWE)
         player.monuments.forEach(mon => {
             ulChildren.appendChild(createObjectNode(mon, 'monument', player.id));
         });
@@ -50,15 +59,19 @@ function createObjectNode(obj, type, playerId) {
     const li = document.createElement('li');
     li.className = 'object-node';
     li.id = `obj-li-${obj.id}`;
-    let icon = `<img src="${CONFIG.images[type]}" width="24" alt="${type}">`;
-   if (type === 'castle') icon = `<img src="${CONFIG.images.iconcastle}" width="24" alt="${type}">`;
-   else if (type === 'ruin') icon = `<img src="${CONFIG.images.iconruin}" width="24" alt="${type}">`;
-   else if (type === 'outpost') icon = `<img src="${CONFIG.images.iconoutpost}" width="24" alt="${type}">`;
-   else if (type === 'lab') icon = `<img src="${CONFIG.images.iconlab}" width="24" alt="${type}">`;
-   else if (type === 'monument') icon = `<img src="${CONFIG.images.iconmonument}" width="24" alt="${type}">`;
+    
+    let iconSrc = CONFIG.images[type] || CONFIG.images['icon' + type];
+    // Fallbacki ikon
+    if (type === 'village') iconSrc = CONFIG.images.iconvillage || CONFIG.images.iconoutpost;
+    if (type === 'castle') iconSrc = CONFIG.images.iconcastle;
+    if (type === 'ruin') iconSrc = CONFIG.images.iconruin;
+    if (type === 'outpost') iconSrc = CONFIG.images.iconoutpost;
+    if (type === 'lab') iconSrc = CONFIG.images.iconlab;
+    if (type === 'monument') iconSrc = CONFIG.images.iconmonument;
+
+    const icon = `<img src="${iconSrc}" width="24" alt="${type}">`;
     
     li.innerHTML = `${icon} <nick>${obj.name}</nick> <small>[${obj.x}:${obj.y}]</small>`;
-
 
     li.onclick = (e) => {
         e.stopPropagation();
@@ -68,6 +81,7 @@ function createObjectNode(obj, type, playerId) {
 }
 
 // Logika wyboru
+// Musisz też zaktualizować handleSelection w js/ui.js aby szukało wiosek przy centrowaniu
 function handleSelection(playerId, objectId, shouldCenter) {
     if (uiElements.panel.classList.contains('collapsed')) {
         togglePanel(true);
@@ -81,14 +95,14 @@ function handleSelection(playerId, objectId, shouldCenter) {
     if (shouldCenter && objectId) {
         const player = state.players.find(p => p.id === playerId);
         
-        // Szukamy obiektu w każdej z tablic
         let target = null;
         if (player.castle.id === objectId) target = player.castle;
         else target = player.outposts.find(o => o.id === objectId);
         
-        // --- NOWE ---
         if (!target) target = player.labs.find(l => l.id === objectId);
         if (!target) target = player.monuments.find(m => m.id === objectId);
+        // --- NOWE ---
+        if (!target) target = player.villages.find(v => v.id === objectId);
         // ------------
 
         if (target) centerMapOn(target.x, target.y);
