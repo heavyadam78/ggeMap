@@ -68,7 +68,7 @@ const WORLD_DATA = {
     ],
     
     // 2. Everwinter Glacier (Ice)
-    "dark": [
+    "lodzik": [
         {
             name: "PlayerNick",
             rank: "leader",
@@ -80,10 +80,10 @@ const WORLD_DATA = {
     ],
     
     // 3. Burning Sands
-    "satellite": [ ... ],
+    "piasek": [ ... ],
     
     // 4. Fire Peaks
-    "terrain": [ ... ]
+    "szczyty": [ ... ]
 };
 ```
 
