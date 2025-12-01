@@ -1,6 +1,4 @@
 
-***
-
 # 🗺️ ggeMap - Interactive Alliance Map
 
 **ggeMap** is a lightweight, fast, and interactive web tool for visualizing player positions on the game world map (GGE). The project uses **HTML5 Canvas** for rendering, ensuring high performance even with a large number of objects.
@@ -10,7 +8,6 @@
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ![Map Preview](img/preview.png)
-
 
 ## ✨ Key Features
 
@@ -22,7 +19,6 @@
 *   **Icon/Image Mode:** Switch between simplified icons and building graphics (LOD).
 *   **Responsive UI:** Collapsible sidebars.
 *   **Settings Persistence:** Remembers camera position, filters, and selected kingdom (LocalStorage).
-
 
 ## 🚀 How to Run?
 
@@ -43,58 +39,59 @@ If you don't use Git, you can simply download the files:
     ```
 2.  Open `index.html`.
 
-
 ## ⚙️ Data Configuration
 
-All player data is located in `js/data.js`. Data is organized by kingdoms.
+All player data is located in `js/data.js`. Data is organized in a "One Player - Many Kingdoms" structure.
 
-### `WORLD_DATA` Structure
+### `ALL_PLAYERS` Structure
 
 ```javascript
-const WORLD_DATA = {
-    // 1. Great Empire (Green)
-    "default": [
-        {
-            name: "PlayerNick",
-            rank: "leader", // Ranks: leader, deputy, warmarshal, general, sargent, member, novice
-            castle: { name: "Main Castle", x: 500, y: 500 },
-            outposts: [
-                { name: "Post 1", x: 502, y: 502 },
-                { name: "Post 2", x: 505, y: 505 }
-            ],
-            labs: [],      // Optional
-            monuments: []  // Optional
+const ALL_PLAYERS = [
+    {
+        name: "PlayerNick",
+        rank: "leader", // Ranks: leader, deputy, warmarshal, general, sargent, member, novice
+        kingdoms: {
+            // 1. Great Empire (Green)
+            "default": {
+                castle: { name: "Main Castle", x: 500, y: 500 },
+                outposts: [
+                    { name: "Post 1", x: 502, y: 502 },
+                    { name: "Post 2", x: 505, y: 505 }
+                ],
+                labs: [],      // Optional
+                monuments: []  // Optional
+            },
+            
+            // 2. Everwinter Glacier (Ice)
+            "lodzik": {
+                castle: { name: "Winter Castle", x: 200, y: 200 },
+                villages: [    // Resource Villages
+                    { name: "Food Village", x: 205, y: 205 }
+                ]
+            },
+            
+            // 3. Burning Sands
+            "piasek": {
+                 castle: { name: "Sand Castle", x: 100, y: 100 }
+            },
+            
+            // 4. Fire Peaks
+            "szczyty": {
+                 castle: { name: "Fire Castle", x: 300, y: 300 }
+            }
         }
-    ],
-    
-    // 2. Everwinter Glacier (Ice)
-    "lodzik": [
-        {
-            name: "PlayerNick",
-            rank: "leader",
-            castle: { name: "Winter Castle", x: 200, y: 200 },
-            villages: [    // Resource Villages
-                { name: "Food Village", x: 205, y: 205 }
-            ]
-        }
-    ],
-    
-    // 3. Burning Sands
-    "piasek": [ ... ],
-    
-    // 4. Fire Peaks
-    "szczyty": [ ... ]
-};
+    },
+    // ... next player
+];
 ```
 
 ### Available Object Types
-*   `castle` (Main Castle - required)
+*   `castle` (Main Castle - required in a given kingdom)
 *   `ruin` (Ruins - alternative to castle)
 *   `outposts` (Outposts)
 *   `villages` (Resource Villages - in elemental kingdoms)
 *   `labs` (Laboratories)
 *   `monuments` (Monuments)
-
 
 ## 🎨 Customization (`config.js`)
 
@@ -104,7 +101,6 @@ In `js/config.js`, you can customize the map's appearance:
 *   Paths to icons and graphics (`images`).
 *   Object sizes on the map.
 
-
 ## 🎮 Controls
 
 *   **LMB + Drag:** Pan the map.
@@ -112,7 +108,6 @@ In `js/config.js`, you can customize the map's appearance:
 *   **Click (LMB):** Select player/object.
 *   **Right Panel:** Player list (click to center map on object).
 *   **Left Panel:** Search and visibility filters.
-
 
 ## 🛠️ Technologies
 
@@ -123,3 +118,4 @@ In `js/config.js`, you can customize the map's appearance:
 
 ---
 *Project created for educational and hobby purposes.*
+```

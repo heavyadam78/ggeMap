@@ -1,6 +1,4 @@
 
-***
-
 # 🗺️ ggeMap - Interaktywna Mapa Sojuszu
 
 **ggeMap** to lekkie, szybkie i interaktywne narzędzie webowe do wizualizacji pozycji graczy na mapie świata gry (GGE). Projekt wykorzystuje **HTML5 Canvas** do renderowania mapy, co zapewnia wysoką wydajność nawet przy dużej liczbie obiektów.
@@ -8,6 +6,8 @@
 ![Status projektu](https://img.shields.io/badge/Status-Aktywny-success)
 ![Technologia](https://img.shields.io/badge/Tech-HTML5_Canvas-orange)
 ![Licencja](https://img.shields.io/badge/Licencja-MIT-blue)
+
+![Podgląd Mapy](img/preview.png)
 
 ## ✨ Główne Funkcjonalności
 
@@ -41,49 +41,52 @@ Jeśli nie korzystasz z Gita, możesz po prostu pobrać pliki:
 
 ## ⚙️ Konfiguracja Danych
 
-Wszystkie dane graczy znajdują się w pliku `js/data.js`. Dane są podzielone na królestwa.
+Wszystkie dane graczy znajdują się w pliku `js/data.js`. Dane są zorganizowane w strukturze "Jeden Gracz - Wiele Królestw".
 
-### Struktura `WORLD_DATA`
+### Struktura `ALL_PLAYERS`
 
 ```javascript
-const WORLD_DATA = {
-    // 1. Wielkie Cesarstwo (Zieleń)
-    "default": [
-        {
-            name: "NickGracza",
-            rank: "leader", // Rangi: leader, deputy, warmarshal, general, sargent, member, novice
-            castle: { name: "Nazwa Zamku", x: 500, y: 500 },
-            outposts: [
-                { name: "Post 1", x: 502, y: 502 },
-                { name: "Post 2", x: 505, y: 505 }
-            ],
-            labs: [],      // Opcjonalne
-            monuments: []  // Opcjonalne
+const ALL_PLAYERS = [
+    {
+        name: "NickGracza",
+        rank: "leader", // Rangi: leader, deputy, warmarshal, general, sargent, member, novice
+        kingdoms: {
+            // 1. Wielkie Cesarstwo (Zieleń)
+            "default": {
+                castle: { name: "Nazwa Zamku", x: 500, y: 500 },
+                outposts: [
+                    { name: "Post 1", x: 502, y: 502 },
+                    { name: "Post 2", x: 505, y: 505 }
+                ],
+                labs: [],      // Opcjonalne
+                monuments: []  // Opcjonalne
+            },
+            
+            // 2. Kraina Wiecznych Lodów (Lód)
+            "lodzik": {
+                castle: { name: "Zamek Zimowy", x: 200, y: 200 },
+                villages: [    // Wioski surowcowe
+                    { name: "Wioska Węgla", x: 205, y: 205 }
+                ]
+            },
+            
+            // 3. Płonące Piaski
+            "piasek": {
+                 castle: { name: "Zamek Pustynny", x: 100, y: 100 }
+            },
+            
+            // 4. Ogniste Szczyty
+            "szczyty": {
+                 castle: { name: "Zamek Ognia", x: 300, y: 300 }
+            }
         }
-    ],
-    
-    // 2. Kraina Wiecznych Lodów
-    "lodzik": [
-        {
-            name: "NickGracza",
-            rank: "leader",
-            castle: { name: "Zamek Zimowy", x: 200, y: 200 },
-            villages: [    // Wioski surowcowe
-                { name: "Wioska Węgla", x: 205, y: 205 }
-            ]
-        }
-    ],
-    
-    // 3. Płonące Piaski
-    "piasek": [ ... ],
-    
-    // 4. Ogniste Szczyty
-    "szczyty": [ ... ]
-};
+    },
+    // ... kolejny gracz
+];
 ```
 
 ### Dostępne typy obiektów
-*   `castle` (Zamek główny - wymagany)
+*   `castle` (Zamek główny - wymagany w danym królestwie)
 *   `ruin` (Ruiny - alternatywa dla zamku)
 *   `outposts` (Posterunki)
 *   `villages` (Wioski surowcowe - na krainach żywiołowych)
@@ -115,5 +118,4 @@ W pliku `js/config.js` możesz dostosować wygląd mapy:
 
 ---
 *Projekt stworzony dla celów edukacyjnych i hobbystycznych.*
-
-***
+```
