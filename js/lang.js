@@ -42,7 +42,8 @@ const TRANSLATIONS = {
         label_coords: "Kordy",
         no_data_kingdom: "Brak danych dla tego królestwa",
         coords_error: "Współrzędne poza mapą!",
-        alliance_prefix: "Sojusz: "
+        alliance_prefix: "Sojusz: ",
+        disclaimer: "To jest nieoficjalne narzędzie fanowskie."
     },
     en: {
         settings_title: "Settings",
@@ -86,7 +87,8 @@ const TRANSLATIONS = {
         label_coords: "Coords",
         no_data_kingdom: "No data for this kingdom",
         coords_error: "Coordinates out of bounds!",
-        alliance_prefix: "Alliance: "
+        alliance_prefix: "Alliance: ",
+        disclaimer: "This is an unofficial fan tool."
     }
 };
 const urlParams = new URLSearchParams(window.location.search);

@@ -118,8 +118,8 @@ function loadMapSettings() {
                 uiElements.filterLabelChkbox.checked = state.isLabelVisible;
             }
             if (!isNaN(s.iconsimages)) {
-                state.displayingImages = s.iconsimages;
-                uiElements.iconsimagesChkbox.checked = s.iconsimages;
+//                state.displayingImages = s.iconsimages;
+//                uiElements.iconsimagesChkbox.checked = s.iconsimages;
             } else {
                 uiElements.iconsimagesChkbox.checked = state.displayingImages;
             }

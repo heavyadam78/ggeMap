@@ -12,7 +12,7 @@ const ALL_PLAYERS = [
                     { name: "Atherurus", x: 629, y: 477 }
                 ],
                 labs: [{ name: "Labo", x: 635, y: 485 }],
-                monuments: [{ name: "mont1", x: 637, y: 480 }]
+                monuments: [{ name: "Monument", x: 637, y: 480 }]
             },
             lodzik: { 
                 castle: { name: "WHITE WOLF", x: 605, y: 605 },
