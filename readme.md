@@ -16,7 +16,7 @@
 *   **Search Engine:** Quickly find players by nickname, object name, or coordinates (X:Y).
 *   **Advanced Filtering:** Toggle visibility of outposts, laboratories, resource villages, and monuments.
 *   **Player List:** Sidebar with a tree structure of the alliance (Grouped by rank).
-*   **Icon/Image Mode:** Switch between simplified icons and building graphics (LOD).
+*   ~~**Icon/Image Mode:** Switch between simplified icons and building graphics (LOD).~~
 *   **Responsive UI:** Collapsible sidebars.
 *   **Settings Persistence:** Remembers camera position, filters, and selected kingdom (LocalStorage).
 
@@ -118,4 +118,4 @@ In `js/config.js`, you can customize the map's appearance:
 
 ---
 *Project created for educational and hobby purposes.*
-```
+*This is an unofficial fan tool.*

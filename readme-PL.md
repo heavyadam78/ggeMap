@@ -16,7 +16,7 @@
 *   **Wyszukiwarka:** Szybkie szukanie graczy po nicku, nazwie obiektu lub współrzędnych (X:Y).
 *   **Filtrowanie:** Możliwość włączania/wyłączania widoczności posterunków, laboratoriów, wiosek i monumentów.
 *   **Lista Graczy:** Boczny panel z drzewiastą strukturą sojuszu (Podział na rangi).
-*   **Tryb Ikon/Obrazów:** Przełączanie między uproszczonymi ikonami a grafikami budynków (LOD).
+*   ~~**Tryb Ikon/Obrazów:** Przełączanie między uproszczonymi ikonami a grafikami budynków (LOD).~~
 *   **Responsywność:** Dostosowany interfejs (zwijane panele boczne).
 *   **Zapis ustawień:** Zapamiętywanie pozycji kamery, filtrów i wybranego królestwa (LocalStorage).
 
@@ -118,4 +118,4 @@ W pliku `js/config.js` możesz dostosować wygląd mapy:
 
 ---
 *Projekt stworzony dla celów edukacyjnych i hobbystycznych.*
-```
+*To jest nieoficjalne narzędzie fanowskie.*
